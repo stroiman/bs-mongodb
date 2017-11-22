@@ -5,7 +5,9 @@
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "respect"
+    "test": "respect",
+    "test:watch": "nodemon node_modules/re-respect/bin/respect",
+    "dev": "run-p test:watch start"
   },
   "keywords": [
     "BuckleScript"
