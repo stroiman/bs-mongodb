@@ -1268,8 +1268,8 @@ re-respect@^0.2.0:
     glob "^7.1.2"
 
 re-sync@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/re-sync/-/re-sync-0.3.1.tgz#364c3b5aee419f5599b9c3149eb19fec9a8cfddc"
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/re-sync/-/re-sync-0.3.2.tgz#be11e06f4cdbd32f714cc2d7ce4b3f24c0322dd8"
 
 read-pkg@^3.0.0:
   version "3.0.0"
