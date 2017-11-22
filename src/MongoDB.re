@@ -1,7 +1,6 @@
 module MongoError = {
   type t = Js.Exn.t;
   [@bs.get] external getCode : t => int = "code";
-  external toExn : t => exn = "%identity";
 };
 
 module ObjectID = {
