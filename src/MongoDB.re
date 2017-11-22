@@ -73,14 +73,14 @@ module Make = (Handler : CallbackHandler) => {
       createIndexNoOpts(col, index) |> Handler.callbackConverter;
   };
 
-  module MongoDb = {
+  module Db = {
     type t;
     [@bs.send] external collection : (t, string) => Collection.t = "collection";
     let collection = (name, conn) => collection(conn, name);
   };
 
   [@bs.module "mongodb"]
-    external connect : (string, (Js.null(MongoError.t), MongoDb.t) => unit) => unit =
+    external connect : (string, (Js.null(MongoError.t), Db.t) => unit) => unit =
       "connect";
 
   let connect = (url) => connect(url) |> Handler.callbackConverter;

@@ -17,7 +17,7 @@ module Mongo = {
 };
 
 let connection = Mongo.connect("mongodb://127.0.0.1:27019/") |> Async.once;
-let collection = connection |> Async.map(~f=Mongo.MongoDb.collection("foo"));
+let collection = connection |> Async.map(~f=Mongo.Db.collection("foo"));
 
 describe("Mongo", [
   it("has a failing test", (_) => {
