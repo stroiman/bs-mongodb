@@ -16,16 +16,18 @@ But I didn't want to push a specific async library upon any users of this
 library, so in order to use the library, you construct the module through a
 functor, that takes a `CallbackHandler` as argument.
 
-If you want to use my async library, you can construct it like this.
+This piece of code is from my project where I bind the mongo library to my async
+library.
 
 ```
+include MongoDB;
+
 module AsyncHandler : CallbackHandler with type t('a) = Async.t('a) = {
   type t('a) = Async.t('a);
-  let callbackConverter = (x:callback('a)) : async('a) => x |> Async.from_js;
+  let callbackConverter = (x:callback('a)) : Async.t('a) => x |> Async.from_js;
 };
 
-
-module Mongo = MongoDB.Make(AsyncHandler);
+include Make(AsyncHandler);
 ```
 
 If you prefer to use a `(Js.Result.t('a,MongoError.t) => unit) => unit`, you can
