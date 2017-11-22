@@ -6,6 +6,13 @@ documentation yet, and far from all features are implemented.
 This library is need-driven, I am adding bindings as I need them. If you add
 bindings to this, feel free to send me a pull request.
 
+## Future breaking change - be aware
+
+When I first created the `Collection.createIndex` function, I needed to pass
+options. But it didn't occur to me then, that the options should be options. So
+in a future version, the options will be passed as an optional argument.
+Currently there is a `Collection.createIndexNoOpts` for a no-options call.
+
 ## Handling Async code
 
 The mongo driver is inherently async, every result is either provided to a
@@ -36,3 +43,4 @@ do so. I might get some examples up.
 And I will try to see if I can get it to work with Promises, for those who
 prefer this route (the underlying node library returns a promise, if no callback
 is passed to the aync functions).
+
