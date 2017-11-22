@@ -40,6 +40,11 @@ module Make = (Handler : CallbackHandler) => {
     [@bs.get] external getInsertedId : t => ObjectID.t = "insertedId";
   };
 
+  module DeleteResult = {
+    type t;
+    [@bs.get] external getDeletedCount : t => int = "deletedCount";
+  };
+
   module Collection = {
     type t;
 
@@ -50,14 +55,22 @@ module Make = (Handler : CallbackHandler) => {
       external findOne : (t, Js.t('a), (Js.null(MongoError.t), Js.null(Js.t('b))) => unit) => unit =
         "findOne";
     [@bs.send]
+      external deleteOne : (t, Js.t('a), (Js.null(MongoError.t), DeleteResult.t) => unit) => unit = "";
+    [@bs.send]
       external createIndex : (t, Js.t('a), Js.t('b), (Js.null(MongoError.t), string)
         => unit) => unit= "";
+    [@bs.send]
+      external createIndexNoOpts : (t, Js.t('a), (Js.null(MongoError.t), string)
+        => unit) => unit= "createIndex";
     [@bs.send.pipe : t]
       external find : Js.t('a) => Cursor.t = "";
     let insertOne = (doc, col) => insertOne(col, doc) |> Handler.callbackConverter;
     let findOne = (doc, col) => findOne(col, doc) |> Handler.callbackConverter;
+    let deleteOne = (doc, col) => deleteOne(col, doc) |> Handler.callbackConverter;
     let createIndex = (index, options, col) =>
       createIndex(col, index, options) |> Handler.callbackConverter;
+    let createIndexNoOpts = (index, col) =>
+      createIndexNoOpts(col, index) |> Handler.callbackConverter;
   };
 
   module MongoDb = {
