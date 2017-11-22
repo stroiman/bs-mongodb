@@ -1,18 +1,36 @@
-# Basic Reason Template
+# MongoDB bindings for bucklescript
 
-Hello! This project allows you to quickly get started with Reason and BuckleScript. If you wanted a more sophisticated version, try the `react` template (`bsb -theme react -init .`).
+This library contains preliminary bindings to MongoDB. There is very little
+documentation yet, and far from all features are implemented.
 
-# Build
+This library is need-driven, I am adding bindings as I need them. If you add
+bindings to this, feel free to send me a pull request.
+
+## Handling Async code
+
+The mongo driver is inherently async, every result is either provided to a
+callback, or delivered in a Promise. I personally use the callbacks with [my own
+async handling library](https://github.com/PeteProgrammer/resync).
+
+But I didn't want to push a specific async library upon any users of this
+library, so in order to use the library, you construct the module through a
+functor, that takes a `CallbackHandler` as argument.
+
+If you want to use my async library, you can construct it like this.
+
 ```
-npm run build
+module AsyncHandler : CallbackHandler with type t('a) = Async.t('a) = {
+  type t('a) = Async.t('a);
+  let callbackConverter = (x:callback('a)) : async('a) => x |> Async.from_js;
+};
+
+
+module Mongo = MongoDB.Make(AsyncHandler);
 ```
 
-# Build + Watch
+If you prefer to use a `(Js.Result.t('a,MongoError.t) => unit) => unit`, you can
+do so. I might get some examples up.
 
-```
-npm run watch
-```
-
-
-# Editor
-If you use `vscode`, Press `Windows + Shift + B` it will build automatically
+And I will try to see if I can get it to work with Promises, for those who
+prefer this route (the underlying node library returns a promise, if no callback
+is passed to the aync functions).

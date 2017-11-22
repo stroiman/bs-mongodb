@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- '8'
+deploy:
+  provider: npm
+  email: peter@stroiman.com
+  api_key:
+    secure: eVDkVTYTXKvf8Xncs4bIvJVBQYKfbQarBg/JkkaNeiKfdjhKUqZ/KSUNizd7XYRHoOWq3LRw+D++1EZtSuwAVhy5CISln4ku3NVZkVpZ+8w56xfbNIg9kCqYCmMq5cuXZkFvetYdzcug7xEW2hkoQXw2v8Flq8OO6YGtxzXRh8EbPISuvhJD+24jn+AGUq64uEzDogmmUZ0qBURqfPSc9DtaX7pDYaeA/SvgIBuW/98y9DyFoUEGwW3QdU30gb9Bjc3UDbZXnRF9Y0c4k5boTWsTGg/tnYj8b7Vh5unyi2UgIWBATFKymbBkOE1YaIx3L1fFfX2U4IeT7pltNeZpCXd14Msn1GmAoWuaSEaWYPXpFcRK0IKRs2sFRAhZdIDgUwAk4eKNSp2sXqH5J+Uao4jul/71dfiyIo9f3laO0EAF+PVxgETH2d6VTS/w9ouguaVXJQfM9F2MMn1CNHnb7KluythDFEBlkEqmgbsdiSOLLqWKWkPVU1xxaoqlB96iIMnPmpfbkmoAdi7/wdM9C7VlgvvieZBKhTpdsNw5oSw/LqdBHdgjg9NWBOclSxxJ3F+BcuhfNMJEZ2bo56HmywYHH6EXn1pH7nl4kd0XBlFCPH5a7kC5oKUpZtVwnEa7W59e+LsVs0GkCCyDBd701vuIOV2MFlojy899zTxVxO4=
+  on:
+    tags: true
+    repo: PeteProgrammer/bs-mongodb
