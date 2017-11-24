@@ -1,5 +1,7 @@
 # MongoDB bindings for bucklescript
 
+[![Build Status](https://travis-ci.org/PeteProgrammer/bs-mongodb.svg?branch=master)](https://travis-ci.org/PeteProgrammer/bs-mongodb)
+
 This library contains preliminary bindings to MongoDB. There is very little
 documentation yet, and far from all features are implemented.
 
