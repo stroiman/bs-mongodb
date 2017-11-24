@@ -13,9 +13,10 @@ let (>>|) = (x,f) => Async.map(~f, x);
 module Mongo = {
   include MongoDB;
 
-  module AsyncHandler : CallbackHandler with type t('a) = Async.t('a) = {
+  module AsyncHandler : CallbackHandler with type t('a) = Async.t('a) with type tresult('a)=unit = {
     type t('a) = Async.t('a);
-    let callbackConverter = (x:callback('a)) : Async.t('a) => x |> Async.from_js;
+    type tresult('a) = unit;
+    let callbackConverter = x => x |> Async.from_js;
     };
 
   include Make(AsyncHandler);

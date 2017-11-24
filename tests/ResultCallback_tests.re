@@ -4,9 +4,10 @@ module Mongo = {
   include MongoDB;
 
   type resultCallback('a) = Js.Result.t('a,MongoDB.MongoError.t) => unit;
-  module AsyncHandler : CallbackHandler with type t('a) = resultCallback('a) => unit = {
+  module AsyncHandler : CallbackHandler with type t('a) = (resultCallback('a) => unit) with type tresult('a)=unit = {
     type t('a) = resultCallback('a) => unit;
-    let callbackConverter = (x:callback('a)) : t('a) => cb => {
+    type tresult('a)=unit;
+    let callbackConverter = (x:callback('a,unit)) : t('a) => cb => {
       x((err, result) => switch(Js.Null.to_opt(err)) {
         | None => cb(Ok(result))
         | Some(x) => cb(Error(x))

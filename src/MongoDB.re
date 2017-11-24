@@ -10,11 +10,12 @@ module ObjectID = {
   [@bs.new] [@bs.module "mongodb"] external make : t = "ObjectID";
 };
 
-type callback('a) = ((Js.Null.t(MongoError.t), 'a) => unit) => unit;
+type callback('a,'res) = ((Js.Null.t(MongoError.t), 'a) => unit) => 'res;
 
 module type CallbackHandler = {
   type t('a);
-  let callbackConverter : callback('a) => t('a);
+  type tresult('a);
+  let callbackConverter : callback('a,tresult('a)) => t('a);
 };
 
 module Make = (Handler : CallbackHandler) => {
@@ -25,7 +26,7 @@ module Make = (Handler : CallbackHandler) => {
     [@bs.send.pipe : t]
       external limit : int => t = "limit";
     [@bs.send]
-      external toArray : (t, (Js.null(MongoError.t), Js.Array.t(Js.t('a))) => unit) => unit = "";
+      external toArray : (t, (Js.null(MongoError.t), Js.Array.t(Js.t('a))) => unit) => Handler.tresult(Js.Array.t(Js.t('a))) = "";
     let toArray = cursor => toArray(cursor) |> Handler.callbackConverter;
     };
 
@@ -49,19 +50,19 @@ module Make = (Handler : CallbackHandler) => {
     type t;
 
     [@bs.send]
-      external insertOne : (t, Js.t('a), (Js.null(MongoError.t), InsertResult.t) => unit) => unit =
+      external insertOne : (t, Js.t('a), (Js.null(MongoError.t), InsertResult.t) => unit) => Handler.tresult(InsertResult.t) =
         "insertOne";
     [@bs.send]
-      external findOne : (t, Js.t('a), (Js.null(MongoError.t), Js.null(Js.t('b))) => unit) => unit =
+      external findOne : (t, Js.t('a), (Js.null(MongoError.t), Js.null(Js.t('b))) => unit) => Handler.tresult(Js.null(Js.t('b))) =
         "findOne";
     [@bs.send]
-      external deleteOne : (t, Js.t('a), (Js.null(MongoError.t), DeleteResult.t) => unit) => unit = "";
+      external deleteOne : (t, Js.t('a), (Js.null(MongoError.t), DeleteResult.t) => unit) => Handler.tresult(DeleteResult.t) = "";
     [@bs.send]
       external createIndex : (t, Js.t('a), Js.t('b), (Js.null(MongoError.t), string)
-        => unit) => unit= "";
+        => unit) => Handler.tresult(string) = "";
     [@bs.send]
       external createIndexNoOpts : (t, Js.t('a), (Js.null(MongoError.t), string)
-        => unit) => unit= "createIndex";
+        => unit) => Handler.tresult(string) = "createIndex";
     [@bs.send.pipe : t]
       external find : Js.t('a) => Cursor.t = "";
     let insertOne = (doc, col) => insertOne(col, doc) |> Handler.callbackConverter;
@@ -80,7 +81,7 @@ module Make = (Handler : CallbackHandler) => {
   };
 
   [@bs.module "mongodb"]
-    external connect : (string, (Js.null(MongoError.t), Db.t) => unit) => unit =
+    external connect : (string, (Js.null(MongoError.t), Db.t) => unit) => Handler.tresult(Db.t) =
       "connect";
 
   let connect = (url) => connect(url) |> Handler.callbackConverter;
