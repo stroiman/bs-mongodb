@@ -6,7 +6,7 @@ module Mongo = {
   module AsyncHandler : CallbackHandler with type t('a) = Js.Promise.t('a) with type tresult('a)=Js.Promise.t('a) = {
     type t('a) = Js.Promise.t('a);
     type tresult('a) = Js.Promise.t('a);
-    let callbackConverter = (x:callback('a,Js.Promise.t('a))) : Js.Promise.t('a) => x([%bs.raw {| undefined |}]);
+    let callbackConverter = (x) : Js.Promise.t('a) => x([%bs.raw {| undefined |}]);
     };
 
   include Make(AsyncHandler);
