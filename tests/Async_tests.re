@@ -1,9 +1,14 @@
 open Respect.Dsl.Async;
 open Respect.Matcher;
 
+module Ctx = TestContext;
+
 let asyncResolve = actual => cb => {
   actual((x => cb(MatchSuccess(x)), x => cb(MatchFailure(x |> Obj.repr))));
 };
+
+let (>>=) = (x,f) => Async.bind(~f, x);
+let (>>|) = (x,f) => Async.map(~f, x);
 
 module Mongo = {
   include MongoDB;
@@ -17,19 +22,27 @@ module Mongo = {
 };
 
 let connection = Mongo.connect("mongodb://127.0.0.1:27019/") |> Async.once;
-let collection = connection |> Async.map(~f=Mongo.Db.collection("foo"));
+let collection = connection >>| Mongo.Db.collection("foo");
 
 describe("Mongo", [
-  it("has a failing test", (_) => {
-    collection
-    |> Async.bind(~f=Mongo.Collection.insertOne({"foo": "bar"}))
-    |> Async.map(~f=Mongo.InsertResult.getInsertedId)
-    |> Async.bind(~f=id => collection |> Async.bind(~f=Mongo.Collection.findOne({"_id": id})))
-    |> Async.map(~f=doc => 
-      switch(Js.Null.to_opt(doc)) {
-        | None => "" 
-        | Some(x) => x##foo 
-      })
-    |> shoulda(asyncResolve >=> equal("bar"))
-  })
+  describe("An object has already been inserted", [
+    beforeEach((ctx,don) => 
+      (collection
+       >>= coll => coll |> Mongo.Collection.insertOne({"foo": "bar"})
+       >>| Mongo.InsertResult.getInsertedId)
+       |> Async.run(id => {
+         ctx |> Ctx.add("id", id);
+         don();
+       })
+    ),
+
+    it("is retrievable", (ctx) => {
+      let id: MongoDB.ObjectID.t = ctx |> Ctx.get("id");
+      (collection
+       >>= Mongo.Collection.findOne({"_id": id})
+       >>| Js.Null.to_opt 
+       >>| fun | None => "" | Some(x) => x##foo)
+       |> shoulda(asyncResolve >=> equal("bar"))
+     })
+  ])
 ]) |> register
