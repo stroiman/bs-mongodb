@@ -79,6 +79,8 @@ module Make = (Handler : CallbackHandler) => {
     let collection = (name, conn) => collection(conn, name);
   };
 
+  module MongoDb = Db;
+
   [@bs.module "mongodb"]
     external connect : (string, (Js.null(MongoError.t), Db.t) => unit) => unit =
       "connect";
