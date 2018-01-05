@@ -1,5 +1,6 @@
 {
   "name": "bs-mongodb",
+  "description": "Bucklescript bindings to node mongodb driver",
   "version": "0.1.2",
   "scripts": {
     "build": "bsb -make-world",
@@ -12,9 +13,21 @@
     "dev:run": "run-p test:watch start",
     "dev": "run-s dev:start dev:run"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeteProgrammer/bs-mongodb.git"
+  },
   "keywords": [
-    "BuckleScript"
+    "bucklescript",
+    "mongodb",
+    "database",
+    "node",
+    "nosql"
   ],
+  "bugs": {
+    "url": "https://github.com/PeteProgrammer/bs-mongodb/issues"
+  },
+  "homepage": "https://github.com/PeteProgrammer/bs-mongodb#readme",
   "author": "",
   "license": "MIT",
   "devDependencies": {
