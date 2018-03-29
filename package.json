@@ -1,7 +1,7 @@
 {
   "name": "bs-mongodb",
   "description": "Bucklescript bindings to node mongodb driver",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
