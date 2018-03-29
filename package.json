@@ -34,8 +34,8 @@
     "bs-platform": "^2.1.0",
     "nodemon": "^1.12.1",
     "npm-run-all": "^4.1.2",
-    "re-respect": "^0.2.0",
-    "re-sync": "^0.3.1"
+    "re-sync": "^0.3.1",
+    "respect": "^0.2.2"
   },
   "dependencies": {
     "mongodb": "^2.2.33"

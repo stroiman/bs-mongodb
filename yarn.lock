@@ -537,7 +537,7 @@ glob-parent@^2.0.0:
   dependencies:
     is-glob "^2.0.0"
 
-glob@^7.0.5, glob@^7.1.2:
+glob@^7.0.5:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -926,6 +926,10 @@ lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
 
+lodash@^3.7.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+
 lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
@@ -1261,12 +1265,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re-respect@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/re-respect/-/re-respect-0.2.0.tgz#65f810a8897d774e641ccbfbb4b97ac2fc72429a"
-  dependencies:
-    glob "^7.1.2"
-
 re-sync@^0.3.1:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/re-sync/-/re-sync-0.3.2.tgz#be11e06f4cdbd32f714cc2d7ce4b3f24c0322dd8"
@@ -1380,6 +1378,12 @@ require_optional@~1.0.0:
 resolve-from@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-2.0.0.tgz#9480ab20e94ffa1d9e80a804c7ea147611966b57"
+
+respect@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/respect/-/respect-0.2.2.tgz#ab51b6d1c4cc195ac8fd3bfb76d793adf3b1ab83"
+  dependencies:
+    lodash "^3.7.0"
 
 rimraf@2, rimraf@^2.5.1, rimraf@^2.6.1:
   version "2.6.2"
