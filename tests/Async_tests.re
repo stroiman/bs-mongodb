@@ -32,7 +32,7 @@ describe("Mongo", [
        >>= coll => coll |> Mongo.Collection.insertOne({"foo": "bar"})
        >>| Mongo.InsertResult.getInsertedId)
        |> Async.run(id => {
-         ctx |> Ctx.add("id", id);
+         ctx |> Ctx.add("id", id) |> ignore;
          don();
        })
     ),
@@ -41,7 +41,7 @@ describe("Mongo", [
       let id: MongoDB.ObjectID.t = ctx |> Ctx.get("id");
       (collection
        >>= Mongo.Collection.findOne({"_id": id})
-       >>| Js.Null.to_opt 
+       >>| Js.Null.toOption
        >>| fun | None => "" | Some(x) => x##foo)
        |> shoulda(asyncResolve >=> equal("bar"))
      })
