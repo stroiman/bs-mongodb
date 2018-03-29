@@ -1,14 +1,15 @@
 open Respect.Dsl.Async;
 open Respect.Matcher;
 
-module Ctx = TestContext;
+module Ctx = Respect.Ctx;
+/* module Ctx = TestContext; */
 
 let asyncResolve = actual => cb => {
-  actual((x => cb(MatchSuccess(x)), x => cb(MatchFailure(x |> Obj.repr))));
+  actual((x => cb(MatchSuccess(x)), x => cb(MatchFailure(x |> Obj.repr, x |> Obj.repr))));
 };
 
-let (>>=) = (x,f) => Async.bind(~f, x);
-let (>>|) = (x,f) => Async.map(~f, x);
+let (>>=) = (x,f) => Async.bind(f, x);
+let (>>|) = (x,f) => Async.map(f, x);
 
 module Mongo = {
   include MongoDB;
