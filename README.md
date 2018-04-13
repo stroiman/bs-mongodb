@@ -11,7 +11,7 @@ bindings to this, feel free to send me a pull request.
 ## Future breaking change - be aware
 
 When I first created the `Collection.createIndex` function, I needed to pass
-options. But it didn't occur to me then, that the options should be options. So
+options. But it didn't occur to me then, that the options should be optional. So
 in a future version, the options will be passed as an optional argument.
 Currently there is a `Collection.createIndexNoOpts` for a no-options call.
 
